@@ -1,0 +1,7 @@
+query_id: 01b1014c-0004-df6b-0001-d767000ba04a
+sql_text: WITH this_week AS (
+SELECT MAX(d_date) monday_date
+FROM dim_date
+query_type: SELECT
+database_name: SALES
+schema_name: REPORTING
