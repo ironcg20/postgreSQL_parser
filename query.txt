@@ -2,6 +2,30 @@ query_id: 01b1014c-0004-df6b-0001-d767000ba04a
 sql_text: WITH this_week AS (
 SELECT MAX(d_date) monday_date
 FROM dim_date
+WHERE d_date <= current_date
+AND d_day_name = 'Monday'
+)
+SELECT
+s.customer_segment
+, s.customer_nation
+, s.customer_region
+, w.monday_date AS orders_since
+, SUM(order_count) order_count
+, SUM(total_revenue) AS total_revenue
+, SUM(total_discount) AS total_discount
+, SUM(count_items_returned) AS count_items_returned
+FROM
+cust_segment_sales_day s
+JOIN
+this_week w
+ON (1=1)
+WHERE
+order_date >= w.monday_date
+GROUP BY
+s.customer_segment
+, s.customer_nation
+, s.customer_region
+, w.monday_date;
 query_type: SELECT
 database_name: SALES
 schema_name: REPORTING
